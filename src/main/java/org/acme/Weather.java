@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.wildfly.mcp.api.Tool;
 import org.wildfly.mcp.api.ToolArg;
 
@@ -15,12 +16,13 @@ public class Weather {
     private static WeatherClient weatherClient = new WeatherClient();
 
     @Tool(description = "Get weather alerts for a US state.", name = "alerts")
-    String getAlerts(@ToolArg(description = "Two-letter US state code (e.g. CA, NY)") String state) {
+    public String getAlerts(@ToolArg(description = "Two-letter US state code (e.g. CA, NY)") String state) {
         return formatAlerts(weatherClient.getAlerts(state));
+//        return weatherClient.getAlertsAsString(state);
     }
 
     @Tool(description = "Get weather forecast for a location.")
-    String getForecast(@ToolArg(description = "Latitude of the location") double latitude,
+    public String getForecast(@ToolArg(description = "Latitude of the location") double latitude,
             @ToolArg(description = "Longitude of the location") double longitude) {
         var points = weatherClient.getPoints(latitude, longitude);
         var url = points.get("forecast").toString();
@@ -65,10 +67,20 @@ public class Weather {
         private Client client = ClientBuilder.newClient();
 
         Alerts getAlerts(String state) {
-            return client.target(REST_URI)
+            try (Response response = client.target(REST_URI)
+//                    .register(GeoJsonReaderInterceptor.class)
                     .path("/alerts/active/area/%s".formatted(state))
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(Alerts.class);
+                    .request(MediaType.APPLICATION_JSON).get();) {
+//                JsonObject bean = response.readEntity(JsonObject.class);
+                return response.readEntity(Alerts.class);
+            }
+        }
+
+        String getAlertsAsString(String state) {
+            Response response = client.target(REST_URI).register(GeoJsonReaderInterceptor.class)
+                    .path("/alerts/active/area/%s".formatted(state))
+                    .request(MediaType.APPLICATION_JSON).get();
+            return "Hello";
         }
 
         Map<String, Object> getPoints(double latitude, double longitude) {
@@ -129,5 +141,6 @@ public class Weather {
 
     public record Forecast(
             ForecastProperties properties) {
+
     }
 }
