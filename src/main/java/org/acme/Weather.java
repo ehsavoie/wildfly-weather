@@ -8,6 +8,9 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import org.wildfly.mcp.api.Tool;
 import org.wildfly.mcp.api.ToolArg;
 
@@ -64,7 +67,7 @@ public class Weather {
 
         private static final String REST_URI = "https://api.weather.gov";
 
-        private Client client = ClientBuilder.newClient();
+        private Client client = ClientBuilder.newClient().property("dev.resteasy.client.follow.redirects", "true");
 
         Alerts getAlerts(String state) {
             try (Response response = client.target(REST_URI)
@@ -84,10 +87,13 @@ public class Weather {
         }
 
         Map<String, Object> getPoints(double latitude, double longitude) {
-            return client.target(REST_URI)
-                    .path("/points/%d,%d".formatted(latitude, longitude))
+            DecimalFormat format = new DecimalFormat("##.####", DecimalFormatSymbols.getInstance(Locale.US));
+            System.out.println(REST_URI + "/points/" + format.format(latitude) +","+format.format(longitude));
+            Response response =  client.target(REST_URI)
+                    .path("/points/" + format.format(latitude) +","+format.format(longitude))
                     .request(MediaType.APPLICATION_JSON)
-                    .get(Map.class);
+                    .get();
+            return response.readEntity(Map.class);
         }
 
         Forecast getForecast(String url) {
