@@ -136,6 +136,14 @@
                             <location>org.wildfly:wildfly-ai-feature-pack:${version.wildfly.ai.feature.pack}</location>
                         </feature-pack>
                     </feature-packs>
+<!--                    <channels>
+                        <channel>
+                            <manifest>
+                                <groupId>dev.resteasy.channels</groupId>
+                                <artifactId>resteasy-6.2</artifactId>
+                            </manifest>
+                        </channel>
+                    </channels>-->
                     <layers>
                         <layer>ee-core-profile-server</layer>
                         <layer>jaxrs</layer>
@@ -150,16 +158,16 @@
                         </packaging-script>
                     </packagingScripts>
                 </configuration>
-                                        <!--
-                                        <configuration>
-                    <discoverProvisioningInfo>
-                        <spaces>
-                            <space>incubating</space>
-                        </spaces>
-                        <version>${version.wildfly.server}</version>
-                    </discoverProvisioningInfo>
-                    <name>ROOT.war</name>
-                  </configuration>-->
+                <!--
+                <configuration>
+                  <discoverProvisioningInfo>
+                      <spaces>
+                          <space>incubating</space>
+                      </spaces>
+                      <version>${version.wildfly.server}</version>
+                  </discoverProvisioningInfo>
+                  <name>ROOT.war</name>
+                </configuration>-->
                 <executions>
                     <execution>
                         <goals>

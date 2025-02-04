@@ -1,7 +1,7 @@
 package org.acme;
 
+import jakarta.json.JsonObject;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import jakarta.ws.rs.client.Client;
@@ -28,7 +28,7 @@ public class Weather {
     public String getForecast(@ToolArg(description = "Latitude of the location") double latitude,
             @ToolArg(description = "Longitude of the location") double longitude) {
         var points = weatherClient.getPoints(latitude, longitude);
-        var url = points.get("forecast").toString();
+        var url = points.get("properties").asJsonObject().getString("forecast");
 
         return formatForecast(weatherClient.getForecast(url));
     }
@@ -86,14 +86,14 @@ public class Weather {
             return "Hello";
         }
 
-        Map<String, Object> getPoints(double latitude, double longitude) {
+        JsonObject getPoints(double latitude, double longitude) {
             DecimalFormat format = new DecimalFormat("##.####", DecimalFormatSymbols.getInstance(Locale.US));
             System.out.println(REST_URI + "/points/" + format.format(latitude) +","+format.format(longitude));
             Response response =  client.target(REST_URI)
                     .path("/points/" + format.format(latitude) +","+format.format(longitude))
                     .request(MediaType.APPLICATION_JSON)
                     .get();
-            return response.readEntity(Map.class);
+            return response.readEntity(JsonObject.class);
         }
 
         Forecast getForecast(String url) {
