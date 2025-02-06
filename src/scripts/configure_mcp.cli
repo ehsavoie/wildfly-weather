@@ -1,3 +1,3 @@
 /subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=read-timeout, value=0)
 /subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=write-timeout, value=0)
-/subsystem=logging/logger=org.jboss.resteasy:add(level=TRACE)
+/subsystem=logging/logger=org.jboss.weld:add(level=TRACE)
