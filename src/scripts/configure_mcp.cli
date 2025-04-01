@@ -1,3 +1,4 @@
 /subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=read-timeout, value=0)
 /subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=write-timeout, value=0)
 /subsystem=logging/logger=org.jboss.weld:add(level=TRACE)
+/subsystem=mcp/wasm-tool=chicory:add(path="/home/ehugonne/dev/AI/examples/greet.wasm")
