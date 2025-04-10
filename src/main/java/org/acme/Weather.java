@@ -1,6 +1,7 @@
 package org.acme;
 
 import jakarta.inject.Inject;
+import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -23,12 +25,32 @@ public class Weather {
     private static WeatherClient weatherClient = new WeatherClient();
 
     @Inject
-    @WasmTool
+    @WasmTool(value = "chicory")
     WasmInvoker chicory;
+
+//    @Inject
+//    @WasmTool
+//    @Named("dice")
+//    WasmInvoker dice;
 
     @Inject
     Greet greet;
 
+    @Inject
+    DiceRoller roller;
+
+    @Inject
+    Pizza pizza;
+
+
+    @Tool(description = "Get the address for the best hawaian pizzas")
+    public String pizzas(@ToolArg(description = "The city where we are looking for Hawaian pizza") String city) {
+        StringWriter out = new StringWriter();
+        Json.createWriter(out).writeObject(Json.createObjectBuilder().add("city", city).build());
+        out.flush();
+        byte[] output = pizza.retrievePizzeriaAddresses(out.toString());
+        return new String(output, StandardCharsets.UTF_8);
+    }
     @Tool(description = "Wait for the desired time.", name = "wait")
     public String waitFor(@ToolArg(description = "The time to wait for in milliseconds") long duration) throws InterruptedException {
         Thread.sleep(duration);
@@ -40,10 +62,19 @@ public class Weather {
         byte[] output = chicory.call("greet", person.getBytes(StandardCharsets.UTF_8));
         return new String(output, StandardCharsets.UTF_8);
     }
- 
+
+    @Tool(description = "Roll a number of dices with a set number of faces")
+    public String roll(@ToolArg(description = "The number of dice") int numberOfDice, @ToolArg(description = "The number of faces for the dice") int numberOfFace) {
+        StringWriter out = new StringWriter();
+        Json.createWriter(out).writeObject(Json.createObjectBuilder().add("numFaces", numberOfFace).add("numDice", numberOfDice).build());
+        out.flush();
+        byte[] output = roller.rollDice(out.toString());
+        return new String(output, StandardCharsets.UTF_8);
+    }
+
     @Tool(description = "Service Greet from RUST module")
     public String serviceGreet(@ToolArg(description = "The name of the person to greet") String person) {
-        return new String(greet.greet(person),StandardCharsets.UTF_8);
+        return new String(greet.greet(person), StandardCharsets.UTF_8);
     }
 
     @Tool(description = "Get weather alerts for a US state with an optional comment parameter.")
