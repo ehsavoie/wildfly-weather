@@ -1,3 +1,10 @@
 /subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=read-timeout, value=0)
 /subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=write-timeout, value=0)
-/subsystem=logging/logger=org.jboss.weld:add(level=TRACE)
+/subsystem=logging/logger=org.jboss.weld:add(level=INFO)
+/subsystem=logging/logger=io.undertow:add(level=TRACE)
+/subsystem=logging/logger=org.wildfly.elytron:add(level=TRACE)
+/subsystem=logging/logger=org.wildfly.security:add(level=TRACE)
+/subsystem=elytron-oidc-client/secure-deployment=ROOT.war:add(client-id=mcp-client, provider-url="${env.OIDC_PROVIDER_URL:http://localhost:8080}/realms/myrealm", ssl-required=EXTERNAL, public-client="true", principal-attribute="preferred_username")
+
+
+#### myuser
