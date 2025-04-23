@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.wildfly.mcp.api.Prompt;
@@ -38,11 +39,11 @@ public class WildFly {
     TextResourceContents index() throws IOException, URISyntaxException {
         try (StringWriter content = new StringWriter();
                 InputStream in = new URI("http://localhost:8080/index.html").toURL().openStream();
-                Reader reader = new InputStreamReader(in, "UTF-8")) {
+                Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8)) {
             char[] buffer = new char[1024];
-            int bytesRead;
-            while ((bytesRead = reader.read(buffer)) != -1) {
-                content.write(buffer, 0, bytesRead);
+            int charsRead = 0;
+            while ((charsRead = reader.read(buffer)) != -1) {
+                content.write(buffer, 0, charsRead);
             }
             return TextResourceContents.create("http://localhost:8080/index.html", content.toString());
         }

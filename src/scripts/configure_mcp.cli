@@ -1,6 +1,7 @@
 /subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=read-timeout, value=0)
 /subsystem=undertow/server=default-server/http-listener=default:write-attribute(name=write-timeout, value=0)
 /subsystem=logging/logger=org.jboss.weld:add(level=INFO)
+/subsystem=logging/logger=org.wildfly.extension.mcp.injection:add(level=DEBUG)
 /subsystem=mcp/wasm-tool=chicory:add(path="/home/ehugonne/dev/AI/examples/greet.wasm")
 /subsystem=mcp/wasm-tool=dice:add(path="/home/ehugonne/dev/AI/examples/roll-dice.wasm")
 /subsystem=mcp/wasm-tool=pizza:add(path="/home/ehugonne/dev/AI/examples/hawaiian-pizza.wasm")
