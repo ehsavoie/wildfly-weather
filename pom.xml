@@ -82,7 +82,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakartaee>10.0.0</jakartaee>
         <version.wildfly.maven.plugin>5.1.3.Final</version.wildfly.maven.plugin>
-        <version.wildfly.server>36.0.1.Final</version.wildfly.server>
+        <version.wildfly.server>38.0.1.Final</version.wildfly.server>
         <version.wildfly.ai.feature.pack>1.0.0-SNAPSHOT</version.wildfly.ai.feature.pack>
     </properties>
     
@@ -164,6 +164,13 @@
                         </spaces>
                         <version>${version.wildfly.server}</version>
                     </discoverProvisioningInfo>
+<!--                    <channels>
+                        <channel>
+                            <manifest>
+                                <url>file:///home/ehugonne/dev/undertow/undertow-2.3.19.Final-manifest.yaml</url>
+                            </manifest>
+                        </channel>
+                    </channels>-->
                     <name>ROOT.war</name>
                     <extraServerContentDirs>
                         <extraServerContentDir>src/wasm</extraServerContentDir>
