@@ -15,8 +15,8 @@
  */
 package org.acme;
 
-import org.wildfly.mcp.api.Tool;
-import org.wildfly.mcp.api.ToolArg;
+import org.mcp_java.annotations.tools.Tool;
+import org.mcp_java.annotations.tools.ToolArg;
 
 public class ExampleTool {
 

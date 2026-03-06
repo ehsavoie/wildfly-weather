@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import org.wildfly.mcp.api.Tool;
-import org.wildfly.mcp.api.ToolArg;
+import org.mcp_java.annotations.tools.Tool;
+import org.mcp_java.annotations.tools.ToolArg;
 import org.wildfly.wasm.api.WasmInvoker;
 import org.wildfly.wasm.api.WasmTool;
 
