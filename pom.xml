@@ -82,7 +82,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakartaee>10.0.0</jakartaee>
         <version.wildfly.maven.plugin>5.1.3.Final</version.wildfly.maven.plugin>
-        <version.wildfly.server>38.0.1.Final</version.wildfly.server>
+        <version.wildfly.server>39.0.1.Final</version.wildfly.server>
         <version.wildfly.ai.feature.pack>1.0.0-SNAPSHOT</version.wildfly.ai.feature.pack>
     </properties>
     
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>org.mcp-java</groupId>
             <artifactId>mcp-annotations</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0-Beta1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
