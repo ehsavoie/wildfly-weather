@@ -15,72 +15,15 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import org.mcp_java.annotations.tools.Tool;
 import org.mcp_java.annotations.tools.ToolArg;
-import org.wildfly.wasm.api.WasmInvoker;
-import org.wildfly.wasm.api.WasmTool;
 
 public class Weather {
 
     private static WeatherClient weatherClient = new WeatherClient();
 
-    @Inject
-    @WasmTool(value = "chicory")
-    WasmInvoker chicory;
-
-    @Tool(description = "Greet from RUST module")
-    public String greet(@ToolArg(description = "The name of the person to greet") String person) {
-        byte[] output = chicory.call("greet", person.getBytes(StandardCharsets.UTF_8));
-        return new String(output, StandardCharsets.UTF_8);
-    }
-
-//    @Inject
-//    @WasmTool
-//    @Named("dice")
-//    WasmInvoker dice;
-//    @Inject
-//    Greet greet;
-//
-//    @Inject
-//    DiceRoller roller;
-
-//    @Inject
-//    Pizza pizza;
-
-//    @Tool(description = "Get the address for the best hawaian pizzas")
-//    public String pizzas(@ToolArg(description = "The city where we are looking for Hawaian pizza") String city) {
-////        StringWriter out = new StringWriter();
-////        Json.createWriter(out).writeObject(Json.createObjectBuilder().add("city", city).build());
-////        return pizza.retrievePizzeriaAddresses(out.toString());
-//        return pizza.retrievePizzeriaAddresses(city);
-//    }
-
     @Tool(description = "Wait for the desired time.", name = "wait")
     public String waitFor(@ToolArg(description = "The time to wait for in milliseconds") long duration) throws InterruptedException {
         Thread.sleep(duration);
         return "Done";
-    }
-
-//
-//    @Tool(description = "Roll a number of dices with a set number of faces")
-//    public String roll(@ToolArg(description = "The number of dice") int numberOfDice, @ToolArg(description = "The number of faces for the dice") int numberOfFace) {
-////        try (StringWriter out = new StringWriter()) {
-////            Json.createWriter(out).writeObject(Json.createObjectBuilder().add("numFaces", numberOfFace).add("numDice", numberOfDice).build());
-////            out.flush();
-////            return roller.roll(out.toString());
-////        } catch (IOException ex) {
-////            throw new RuntimeException(ex);
-////        }
-//        return roller.roll(numberOfDice, numberOfFace);
-//    }
-//
-//    @Tool(description = "Service Greet from RUST module")
-//    public String serviceGreet(@ToolArg(description = "The name of the person to greet") String person) {
-//        return greet.greet(person);
-//    }
-
-    @Tool(description = "Get weather alerts for a US state with an optional comment parameter.")
-    public String getAlerts(@ToolArg(description = "Two-letter US state code (e.g. CA, NY)") String state, @ToolArg(description = "Comment", required = false) String comment) {
-        System.out.println("Comment received " + comment);
-        return formatAlerts(weatherClient.getAlerts(state));
     }
 
     @Tool(description = "Get weather alerts for a US state.", name = "alerts")
