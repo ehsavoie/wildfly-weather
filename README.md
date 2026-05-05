@@ -47,6 +47,12 @@ Alterantively, you can connect with the Server-Sent Events (SSE) transport type 
 
 You should see all those tools.
 
+If you are using Claude Code, you can add this MCP server with:
+
+```bash
+claude mcp add --scope project --transport http wildfly-weather http://localhost:8080/stream
+```
+
 ## Links
 
 * WildFly AI Feature Pack: https://github.com/wildfly-extras/wildfly-ai-feature-pack
