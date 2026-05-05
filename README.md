@@ -53,6 +53,11 @@ If you are using Claude Code, you can add this MCP server with:
 claude mcp add --scope project --transport http wildfly-weather http://localhost:8080/stream
 ```
 
+You can then ask it question such as:
+
+* `What is the weather forecast for tomorrow at San Antonio?`
+* `Are there any weather alerts for Denver?`
+
 ## Links
 
 * WildFly AI Feature Pack: https://github.com/wildfly-extras/wildfly-ai-feature-pack

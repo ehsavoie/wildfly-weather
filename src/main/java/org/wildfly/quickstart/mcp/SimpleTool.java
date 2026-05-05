@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.acme;
+package org.wildfly.quickstart.mcp;
 
 import org.mcp_java.annotations.tools.Tool;
 import org.mcp_java.annotations.tools.ToolArg;
 
-public class ExampleTool {
+/*
+ * Example of a closed-world tool that does not rely on any external system
+ */
+public class SimpleTool {
 
-    @Tool(name = "String.length", description = "Calculates the length of a string")
-    int stringLength(@ToolArg(description = "the string the length of of which we want to calculate") String s) {
-        System.out.println("Called stringLength() with s='" + s + "'");
-        return s.length();
+    @Tool(name = "length-of-string", description = "Calculates the length of a string")
+    int stringLength(@ToolArg(description = "the string the length of of which we want to calculate") String string) {
+        return string.length();
     }
 }
