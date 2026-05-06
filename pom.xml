@@ -35,20 +35,6 @@
             </snapshots>
             <layout>default</layout>
         </repository>
-        <repository>
-            <id>redhat-ga-maven-repository</id>
-            <name>Red Hat GA Maven Repository</name>
-            <url>https://maven.repository.redhat.com/ga/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-            <layout>default</layout>
-        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -62,30 +48,19 @@
                 <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
-        <pluginRepository>
-            <id>redhat-ga-maven-repository</id>
-            <name>Red Hat GA Maven Repository</name>
-            <url>https://maven.repository.redhat.com/ga/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
     </pluginRepositories>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakartaee>10.0.0</jakartaee>
-        <version.wildfly.maven.plugin>5.1.3.Final</version.wildfly.maven.plugin>
+        <version.wildfly.maven.plugin>5.1.5.Final</version.wildfly.maven.plugin>
         <version.wildfly.server>39.0.1.Final</version.wildfly.server>
-        <version.wildfly.ai.feature.pack>1.0.0-SNAPSHOT</version.wildfly.ai.feature.pack>
+        <version.wildfly.ai.feature.pack>0.10.0-SNAPSHOT</version.wildfly.ai.feature.pack>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>jakarta.platform</groupId>
@@ -99,14 +74,8 @@
             <version>1.0.0-Beta1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-wasm-api</artifactId>
-            <version>${version.wildfly.ai.feature.pack}</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -132,49 +101,21 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>${version.wildfly.maven.plugin}</version>
-                <!--      <configuration>
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <location>org.wildfly:wildfly-galleon-pack:${version.wildfly.server}</location>
-                                        </feature-pack>
-                                        <feature-pack>
-                                            <location>org.wildfly:wildfly-ai-feature-pack:${version.wildfly.ai.feature.pack}</location>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <layers>
-                                        <layer>ee-core-profile-server</layer>
-                                        <layer>jaxrs</layer>
-                                        <layer>mcp-server</layer>
-                                        <layer>wasm</layer>
-                                    </layers>
-                                    <name>ROOT.war</name>
-                                    <packagingScripts>
-                                        <packaging-script>
-                                            <scripts>
-                                                <script>./src/scripts/configure_mcp.cli</script>
-                                            </scripts>
-                                        </packaging-script>
-                                    </packagingScripts>
-                                </configuration>
-                -->
                 <configuration>
-                    <discoverProvisioningInfo>
-                        <spaces>
-                            <space>incubating</space>
-                        </spaces>
-                        <version>${version.wildfly.server}</version>
-                    </discoverProvisioningInfo>
-<!--                    <channels>
-                        <channel>
-                            <manifest>
-                                <url>file:///home/ehugonne/dev/undertow/undertow-2.3.19.Final-manifest.yaml</url>
-                            </manifest>
-                        </channel>
-                    </channels>-->
+                    <feature-packs>
+                        <feature-pack>
+                            <location>org.wildfly:wildfly-galleon-pack:${version.wildfly.server}</location>
+                        </feature-pack>
+                        <feature-pack>
+                            <location>org.wildfly.generative-ai:wildfly-ai-feature-pack:${version.wildfly.ai.feature.pack}</location>
+                        </feature-pack>
+                    </feature-packs>
+                    <layers>
+                        <layer>jaxrs-server</layer>
+                        <layer>mcp-server</layer>
+                    </layers>
+                    <stability>experimental</stability>
                     <name>ROOT.war</name>
-                    <extraServerContentDirs>
-                        <extraServerContentDir>src/wasm</extraServerContentDir>
-                    </extraServerContentDirs>
                     <packagingScripts>
                         <packaging-script>
                             <scripts>
