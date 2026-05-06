@@ -19,15 +19,15 @@ This project serves as a reference for developers looking to:
 
 ## Getting Started
 
-Building and starting the MCP server:
+Building and starting the WildFly server:
 ```bash
 
 mvn clean install
-./target/server/bin/standalone.sh
+./target/server/bin/standalone.sh --stability experimental
 
 ```
 
-You can use the MCP inspector to test  your tools
+You can use the MCP inspector to test your tools
 
 ```bash
 
@@ -35,14 +35,14 @@ npx @modelcontextprotocol/inspector
 
 ```
 
-Once you are on the [MPC inspector UI](http://127.0.0.1:6274), you can connect to your [WildFlyMCP server](http://localhost:8080/sse) with the Streamable HTTP transport type using the parameters:
+Once you are on the [MPC inspector UI](http://127.0.0.1:6274), you can connect to your WildFly server with the Streamable HTTP transport type using the parameters:
 
 * Transport Type: **Streamable HTTP**
 * URL: **http://localhost:8080/stream**
 
 Alterantively, you can connect with the Server-Sent Events (SSE) transport type using the parameters:
 
-* Transport Type: `SSE`
+* Transport Type: **SSE**
 * URL: **http://localhost:8080/stream**
 
 You should see all those tools.

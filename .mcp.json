@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "wildfly-weather": {
-      "type": "http",
-      "url": "http://localhost:8080/stream"
-    }
-  }
-}
